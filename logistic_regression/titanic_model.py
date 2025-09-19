@@ -51,7 +51,8 @@ data["fam_size"] = data["sibsp"] + data["parch"]
 data.drop(["sibsp", "parch", "ticket"], axis="columns", inplace=True)
 print(data.describe())
 print(data.columns, data.shape)
-print("survived female with pclass=1:", data.loc[(data["sex"]=="female") & (data["pclass"]==1), "survived"].sum())
+print("female with pclass=1:", data.loc[(data["sex"]=="female") & (data["pclass"]==1), "survived"].sum())
+print("survived female with pclass=1:", data.loc[(data["sex"]=="female") & (data["pclass"]==1), "survived"].count())
 
 if sys.argv[1]=="1":
     data_survived = data.loc[data["survived"]==1]
@@ -91,3 +92,11 @@ print("mean age of Miss", data_name[data_name["honorific"]=="Miss"]["age"].mean(
 data_name = data_name.apply(apply_age(mean_ages), axis="columns")
 print(data_name.describe())
 get_fit_model(data_name.drop(["name", "honorific"], axis="columns"), 3)
+
+data_encoded = data_name.drop(["name", "honorific"], axis="columns")
+print("data_encoded structure",data_encoded.columns, data_encoded.shape)
+data_encoded["sex"] = data["sex"]
+data_encoded["embarked"] = data["embarked"]
+
+data_encoded = pd.get_dummies(data_encoded, drop_first=True, columns=["sex", "embarked"])
+get_fit_model(data_encoded, 3)
