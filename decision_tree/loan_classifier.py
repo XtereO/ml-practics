@@ -65,3 +65,19 @@ model1 = get_fit_model1(1, "gini")
 model2 = get_fit_model1(2, "entropy")
 model3 = get_fit_model1(3, "gini", "balanced")
 model4 = get_fit_model1(4, "entropy", "balanced")
+
+if len(sys.argv) > 1 and sys.argv[1] == "4":
+    sns.histplot(y_train)
+    plt.show()
+
+print("number of accepted Personal Loan",
+      y_train[y_train == 1].size, y_train.size)
+
+sm = SMOTE(random_state=121)
+X_resampled, y_resampled = sm.fit_resample(X_train, y_train)
+print("number of accepted Personal Loan after resampling",
+      y_resampled[y_resampled == 1].size, y_resampled.size)
+
+get_fit_model2 = prepare_data(X_resampled, X_test, y_resampled, y_test)
+model5 = get_fit_model2(5, "gini")
+model6 = get_fit_model2(6, "entropy")
