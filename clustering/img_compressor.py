@@ -27,6 +27,7 @@ print("avg intensity scaled pixels:", mean_intensity(img_scaled))
 h, w, c = img.shape
 img_scaled_flat = img_scaled.reshape((h*w, 3))
 
+# so we can store for each pixel only 4 bits! 
 model = MiniBatchKMeans(n_clusters=16, random_state=18).fit(img_scaled_flat)
 
 clusters = model.cluster_centers_
