@@ -122,6 +122,7 @@ if sys_arg("pred"):
     '''
     # it turned out that the most impact param for GB is max_depth (more max_depth the more score I usually get in GridSearch)
     # learning_rate influences on speed of learning, n_estimators can influence on score a bit too
+    # actually there was an idea to use Stacking (as meta=LogisticRegression) with GradientBoost(the best params) and RandomForest(n_estimators=1000+the best params) (or just one RandomForest)
     model = GradientBoostingClassifier(
         n_estimators=900, learning_rate=0.7, max_depth=4)
 
